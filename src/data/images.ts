@@ -1,0 +1,50 @@
+/** Unsplash photography helper — every ID below has been checked to resolve. */
+export const img = (id: string, w = 900, h?: number) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}${h ? `&h=${h}` : ''}&q=80`
+
+export const PHOTO = {
+  teeWhiteModel: '1521572163474-6864f9cf17ab',
+  teeBlackHanger: '1583743814966-8936f5b7be1a',
+  teeGraphic: '1576566588028-4147f3842f27',
+  sweatWhite: '1620799140408-edc6dcb6d633',
+  hoodieGrey: '1556821840-3a63f95609a7',
+  teeGraphicModel: '1503341504253-dff4815485f1',
+  rackLight: '1490481651871-ab68de25d43d',
+  storeInterior: '1441984904996-e0b6ba687e04',
+  storeRack: '1445205170230-053b83016050',
+  streetDenim: '1516826957135-700dedea698c',
+  blazerCamel: '1552374196-1ab2a1c593e8',
+  jeansFolded: '1542272604-787c3835535d',
+  jeansStreet: '1541099649105-f69ad21f3246',
+  shirtDenim: '1596755094514-f87e34085b2c',
+  shirtsFolded: '1602810318383-e386cc2a3ccf',
+  shirtWhiteTie: '1598033129183-c4f50c736f10',
+  polosFolded: '1586363104862-3a5e2ab60d99',
+  teeBlackPrint: '1618354691373-d851c5c3a990',
+  teeWhiteFlat: '1529374255404-311a2a4f1fd9',
+  editorialArch: '1488161628813-04466f872be2',
+  portraitKnit: '1506794778202-cad84cf45f1d',
+  jacketLeather: '1551028719-00167b16eac5',
+  jacketBomber: '1591047139829-d91aecb6caea',
+  jacketUtility: '1548883354-94bcfe321cbb',
+  teeBlueHanger: '1564584217132-2271feaeb3c5',
+  streetSitting: '1520975954732-35dd22299614',
+  denimJacketFlat: '1495105787522-5334e3ffa0ef',
+  chinoStreet: '1473966968600-fa801b869a1a',
+  shirtsHanging: '1603252109303-2751441dd157',
+  teesRack: '1626497764746-6dc36546b388',
+  teeWhiteDark: '1581655353564-df123a1eb820',
+  jeansHanging: '1576995853123-5a10305d93c0',
+  jacketBlackModel: '1617127365659-c47fa864d8bc',
+  denimJacketDark: '1611312449408-fcece27cdbb7',
+  teeBlackModel2: '1622519407650-3df9883f76a5',
+  hoodieWhiteModel: '1550246140-29f40b909e5a',
+  teeBlackModel: '1618517351616-38fb9c5210c6',
+  shirtBlueModel: '1620012253295-c15cc3e65df4',
+  blazerBlackModel: '1592878849122-facb97520f9e',
+  shirtWhiteModel: '1588359348347-9bc6cbbb689e',
+  denimJacketModel: '1516257984-b1b4d707412e',
+} as const
+
+export type PhotoKey = keyof typeof PHOTO
+export const photo = (key: PhotoKey, w = 900, h?: number) => img(PHOTO[key], w, h)

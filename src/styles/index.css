@@ -1,0 +1,161 @@
+@import 'tailwindcss';
+
+/* Client Studio dark mode is scoped to the .studio-dark wrapper (storefront is unaffected) */
+@custom-variant dark (&:where(.studio-dark, .studio-dark *));
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
+
+  --color-ink: #0b0b0b;
+  --color-ink-2: #161616;
+  --color-ink-3: #232323;
+  --color-ivory: #f7f3ec;
+  --color-cream: #efe8dc;
+  --color-sand: #c8a97e;
+  --color-sand-dark: #a88a60;
+  --color-stone: #8a8378;
+
+  /* Emil Kowalski's curves: strong ease-out for entering UI, iOS-style curve for drawers */
+  --ease-luxe: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-ink;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-sand);
+    color: var(--color-ink);
+  }
+  /* Browser surfaces carry the palette too (impeccable craft floor) */
+  html {
+    scrollbar-color: #b9b2a6 transparent;
+    accent-color: var(--color-ink);
+  }
+  input,
+  textarea {
+    caret-color: var(--color-sand-dark);
+  }
+  a {
+    text-underline-offset: 0.2em;
+  }
+  /* Press feedback on every pressable control: 0.97 for 160ms (uses the independent `scale` property,
+     so it composes with hover translations) */
+  button,
+  .press {
+    transition-property: color, background-color, border-color, box-shadow, opacity, translate, scale, rotate;
+    transition-duration: 160ms;
+    transition-timing-function: var(--ease-luxe);
+  }
+  button:not(:disabled):active,
+  .press:active {
+    scale: 0.97;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-sand);
+    outline-offset: 2px;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+  img {
+    @apply select-none;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold tracking-[0.28em] uppercase;
+  }
+  .link-underline {
+    @apply relative;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500;
+    transition-timing-function: var(--ease-luxe);
+  }
+  .link-underline:hover::after,
+  .link-underline[aria-current='page']::after {
+    @apply origin-left scale-x-100;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Shimmer used while images load */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.img-skeleton {
+  background: linear-gradient(90deg, #efebe4 0px, #f7f4ef 120px, #efebe4 240px);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+.studio-dark .img-skeleton {
+  background: linear-gradient(90deg, #1d1d1f 0px, #262628 120px, #1d1d1f 240px);
+  background-size: 800px 100%;
+}
+
+/* Marquee for the announcement bar on small screens */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* Respect reduced-motion preferences everywhere */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Range input (price filter) */
+input[type='range'].range-luxe {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+input[type='range'].range-luxe::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  height: 18px;
+  width: 18px;
+  border-radius: 9999px;
+  background: #0b0b0b;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px #0b0b0b;
+}
+input[type='range'].range-luxe::-moz-range-thumb {
+  pointer-events: auto;
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: #0b0b0b;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px #0b0b0b;
+}
